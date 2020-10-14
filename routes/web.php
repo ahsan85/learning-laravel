@@ -11,6 +11,15 @@
 |
 */
 
+use Facade\FlareClient\View;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+/*  this is my 5th class practice */
+Route::get('/test',function(){
+    return View('test_view');
+ });
+
