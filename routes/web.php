@@ -13,13 +13,29 @@
 
 use Facade\FlareClient\View;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 /*  this is my 5th class practice */
-Route::get('/test',function(){
-    return View('test_view');
- });
+Route::get('/test', function () {
+    return view('test_view');
+});
 
+ // Required route with dynamic parameter
+ /*
+ Route::get('welcome/{name}',function ($name){
+    return "welcome,".$name;
+ });
+*/
+
+
+ // optional route with dynamic parameter
+ /*
+ Route::get('welcome/{name?}',function ($name=" "){
+    return "welcome,".$name;
+ });
+*/
+
+Route::get('welcome','WelcomeController@welcome');

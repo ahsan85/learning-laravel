@@ -81,7 +81,10 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    {{$data['name']}}
+                    <br>
+                    {{$data['company']}}
+
                 </div>
 
                 <div class="links">
