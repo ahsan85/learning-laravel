@@ -39,3 +39,4 @@ Route::get('/test', function () {
 */
 
 Route::get('welcome','WelcomeController@welcome');
+Route::resource('post','PostController');

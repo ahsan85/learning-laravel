@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model{
     public function data()
     {
-        return[
+        return[[
             'name'=>"Ahsan",
             'company'=> "Workgroup"
-        ];
+        ],[
+            'name'=>"ali",
+            'company'=>"teamware"
+        ]];
     }
 }
