@@ -53,7 +53,11 @@ class PostController extends Controller
     //        echo"request is not post";
     //    }
 
-     return $request->input('check.0');
+
+   //  return $request->input('check.0');
+
+
+     $request->file('photo')->storeAs('images','nature.jpeg','public');
     }
 
     /**

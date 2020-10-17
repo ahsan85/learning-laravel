@@ -9,7 +9,7 @@
 
 <body>
     <h5>Create New Post</h5>
-    <form action="<?php echo route('post.store') ?>" method="post">
+    <form action="<?php echo route('post.store') ?>" method="post" enctype="multipart/form-data">
         @csrf
         <input type="text" name="title" id="">
         <input type="text" name="conent" id="">
@@ -28,7 +28,8 @@
         <label for="Bio">Bio
             <input type="checkbox" name="check[]" id="" value="bio">
         </label>
-
+        <br><br>
+        <label for="">Upload an image<input type="file" name="photo" id=""></label>
         <input type="submit" value="Add New Post">
     </form>
 </body>
