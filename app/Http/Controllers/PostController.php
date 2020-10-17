@@ -67,7 +67,9 @@ class PostController extends Controller
 
         // );
 
-        $request->validated();
+         $request->validated();
+
+        return back()->with('message','post created successfully');
     }
 
     /**

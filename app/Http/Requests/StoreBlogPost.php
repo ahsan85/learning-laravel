@@ -25,10 +25,15 @@ class StoreBlogPost extends FormRequest
     {
         return [
             
-                'title' => 'required',
-                'content' => 'required',
-                'check' => 'required',
-                'photo' => 'required',
+                // 'title' => 'required',
+                // 'content' => 'required',
+                // 'check' => 'required',
+                // 'photo' => 'required',
+                'tos' => 'accepted',
+            //    'website'=>'required|active_url',
+               'sdt'=>'required|date|after:today',
+               'edt'=>'required|date|after:sdt'
+
             
         ];
     }
