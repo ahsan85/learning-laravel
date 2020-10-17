@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlogPost;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
@@ -13,14 +14,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return $request->query('title');
-        $posts=new Post;
-        $data=$posts->data();
        
-        return view('post.index',compact('data'));
+        $posts = new Post;
+        $data = $posts->data();
 
+        return view('post.index', compact('data'));
     }
 
     /**
@@ -39,25 +39,35 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
         // return $request->all();
         //return $request->input('title');
         //return $request->path();
-       // dd( $request->url());
-    //    return $request->method();
-    //    if($request->isMethod('GET'))
-    //    {
-    //        echo "Request is POST";
-    //    }else{
-    //        echo"request is not post";
-    //    }
+        // dd( $request->url());
+        //    return $request->method();
+        //    if($request->isMethod('GET'))
+        //    {
+        //        echo "Request is POST";
+        //    }else{
+        //        echo"request is not post";
+        //    }
 
 
-   //  return $request->input('check.0');
+        //  return $request->input('check.0');
 
 
-     $request->file('photo')->storeAs('images','nature.jpeg','public');
+       // $request->file('photo')->storeAs('images', 'nature.jpeg', 'public');
+
+        // $request->validate(
+        //    ['title' =>'required',
+        //     'content'=>'required',
+        //     'check'=>'required',
+        //     'photo'=>'required',]
+
+        // );
+
+        $request->validated();
     }
 
     /**
@@ -89,7 +99,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreBlogPost $request, $id)
     {
         //
     }
