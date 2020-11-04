@@ -2,17 +2,9 @@
 namespace App\Models;
 
 use Highlight\Mode;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model{
-    public function data()
-    {
-        return[[
-            'name'=>"Ahsan",
-            'company'=> "Workgroup"
-        ],[
-            'name'=>"ali",
-            'company'=>"teamware"
-        ]];
-    }
+   protected $guard = [];
 }

@@ -12,6 +12,9 @@
 */
 
 use Facade\FlareClient\View;
+// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -19,24 +22,35 @@ use Facade\FlareClient\View;
 
 
 /*  this is my 5th class practice */
+
 Route::get('/test', function () {
-    return view('test_view');
+   return view('dashboard.admin');
 });
 
- // Required route with dynamic parameter
- /*
+// Required route with dynamic parameter
+/*
  Route::get('welcome/{name}',function ($name){
     return "welcome,".$name;
  });
 */
 
 
- // optional route with dynamic parameter
- /*
+// optional route with dynamic parameter
+/*
  Route::get('welcome/{name?}',function ($name=" "){
     return "welcome,".$name;
  });
 */
 
-Route::get('welcome','WelcomeController@welcome');
-Route::resource('post','PostController');
+// Route::get('welcome','WelcomeController@welcome');
+Route::prefix('admin')->group(function () {
+   Route::view('/', 'dashboard.admin');
+   Route::resource('posts', 'PostController');
+   Route::resource('profile', 'UserProfileController');
+   Route::resource('profile', 'UserProfileController');
+   Route::resource('users', 'UserController');
+
+   Route::resource('pages', 'PageController');
+   Route::resource('categories', 'CategoryController');
+   Route::resource('roles', 'RoleController');
+});
