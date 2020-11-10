@@ -101,7 +101,7 @@ class CategoryController extends Controller
         else
             $filename = $category->thumnail;
         $category->thumbnail = $filename;
-        $category = $category->save();
+        $category = $category->update();
         if ($category) {
             return redirect()->route('categories.index');
         }

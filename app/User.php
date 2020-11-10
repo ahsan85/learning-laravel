@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use App\UserProfile;
+use App\Role;
 class User extends Authenticatable
 {
     
@@ -44,4 +45,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class,'user_id','id');
     }
+
+    public function roles()
+    {
+
+        return $this->belongsToMany(Role::class);
+    }
 }
+

@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\UserController;
 use Facade\FlareClient\View;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +24,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*  this is my 5th class practice */
 
-Route::get('/test', function () {
-   return view('dashboard.admin');
-});
-
+Route::get('/test','UserController@test' );
 // Required route with dynamic parameter
 /*
  Route::get('welcome/{name}',function ($name){
