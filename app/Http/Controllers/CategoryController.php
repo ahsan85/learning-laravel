@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
 
 class CategoryController extends Controller
 {
@@ -47,6 +48,8 @@ class CategoryController extends Controller
         $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
         if ($request->hasFile('thumbnail'))
             $filename = $request->file('thumbnail')->storeAs('images', $filename, 'public');
+        else
+        $filename=Null;
         $category->thumbnail = $filename;
         $category = $category->save();
         if ($category) {

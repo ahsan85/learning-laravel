@@ -12,13 +12,13 @@
 </div>
 @if(!$users->isEmpty())
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
+    <table class="table table-striped  " style="table-layout: auto; width: 100%;  ">
         <thead>
             <tr>
                 <th>
                     #
                 </th>
-                <th>Name</th>
+                <th width="12%">Name</th>
                 <th>Email</th>
                 <th>Profile</th>
                 <th>Phone</th>
@@ -41,13 +41,13 @@
             <td class="pt-3"> {{  $user->roles->implode('name', ', ') }}</td>
             @endif
             <td class="pt-2">
-                <div class=" btn-sm col-sm  row" role="group">
-                    <a href="{{route('users.show',$user->id)}}" user="button" class="btn btn-secondary ">View</a>
-                    <a user="button" href="{{route('users.edit',$user->id)}}" class="btn btn-secondary">Edit</a>
-                    <form action="{{route('users.destroy',$user->id)}}" method="post">
+                <div class=" btn-group" role="group">
+                    <a href="{{route('users.show',$user->id)}}" role="button" class="btn btn-secondary btn-sm ">View</a>
+                    <a role="button" href="{{route('users.edit',$user->id)}}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form action="{{route('users.destroy',$user->id)}}" method="post" class="btn-group">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-secondary">Delete</button></form>
+                        <button type="submit" class="btn btn-secondary btn-sm">Delete</button></form>
 
                 </div>
             </td>

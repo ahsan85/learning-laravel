@@ -13,7 +13,7 @@
 
 @if(!$categories->isEmpty())
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
+    <table class="table table-striped" style="table-layout: auto; width: 100%;">
         <thead>
             <tr>
                 <th>
@@ -45,13 +45,13 @@
             <td class="pt-3">{{$category->created_at}}</td>
             <td class="pt-3">{{$category->updated_at}}</td>
             <td class="pt-2">
-                <div class=" btn-sm col-sm  row" role="group">
-                    <a href="{{route('categories.show',$category->id)}}" category="button" class="btn btn-secondary ">View</a>
-                    <a category="button" href="{{route('categories.edit',$category->id)}}" class="btn btn-secondary">Edit</a>
-                    <form action="{{route('categories.destroy',$category->id)}}" method="post">
+                <div class=" btn-group" role="group">
+                    <a href="{{route('categories.show',$category->id)}}" role="button" class="btn btn-secondary btn-sm">View</a>
+                    <a role="button" href="{{route('categories.edit',$category->id)}}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form action="{{route('categories.destroy',$category->id)}}" method="post" class="btn-group">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-secondary">Delete</button></form>
+                        <button type="submit" class="btn btn-secondary btn-sm ">Delete</button></form>
 
                 </div>
             </td>

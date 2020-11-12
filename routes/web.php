@@ -15,33 +15,17 @@ use App\Http\Controllers\UserController;
 use Facade\FlareClient\View;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Location;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+Route::view('/','welcome');
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
-/*  this is my 5th class practice */
-
-Route::get('/test','UserController@test' );
-// Required route with dynamic parameter
-/*
- Route::get('welcome/{name}',function ($name){
-    return "welcome,".$name;
- });
-*/
-
-
-// optional route with dynamic parameter
-/*
- Route::get('welcome/{name?}',function ($name=" "){
-    return "welcome,".$name;
- });
-*/
 
 // Route::get('welcome','WelcomeController@welcome');
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
    Route::view('/', 'dashboard.admin');
    Route::resource('posts', 'PostController');
    Route::resource('profile', 'UserProfileController');
@@ -51,4 +35,22 @@ Route::prefix('admin')->group(function () {
    Route::resource('pages', 'PageController');
    Route::resource('categories', 'CategoryController');
    Route::resource('roles', 'RoleController');
+   Route::post('upload',function(){
+      $filename = sprintf('tiny_%s.jpg', random_int(1, 1000));
+      if (request()->hasFile('file'))
+          $filename = request()->file('file')->storeAs('tiny', $filename, 'public');
+      else
+          $filename = null;
+          if($filename !==null)
+          {
+             return response()->json(['location'=>asset('storage/'.$filename)],200);
+          }
+          else{
+             return response()->json(['location'=>'Failed to upload'],200);
+          }
+   });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

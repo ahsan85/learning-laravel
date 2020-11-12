@@ -45,22 +45,22 @@
                 <input type="text" class="form-control" id="city" placeholder="Enter City" name="city">
             </div>
         </div>
-       
+
     </div>
     <div class="form-group ">
-            <select class="select-multiple-subject " name="roles[]" multiple="multiple" style="width: 100%" id="role">
-                <!-- Computer science -->
-               
-                @if(!$roles->isEmpty())
-                @foreach($roles as $role)
-                <option value="{{$role->id}}">{{$role->name}}</option>
-                @endforeach
-                @endif
-            </select>
+        <select class="select-multiple-role " name="roles[]" multiple="multiple" style="width: 100%" id="role">
+            <!-- Computer science -->
 
-            </select>
+            @if(!$roles->isEmpty())
+            @foreach($roles as $role)
+            <option value="{{$role->id}}">{{$role->name}}</option>
+            @endforeach
+            @endif
+        </select>
 
-        </div>
+        </select>
+
+    </div>
     <div class="form-group">
         <label for="profileImage"></label>
         <input type="file" class="form-control-file custom-file" id="profileImage" name="profileImage">

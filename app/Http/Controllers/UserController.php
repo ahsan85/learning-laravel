@@ -10,12 +10,7 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserController extends Controller
 {
-    public function test()
-    {
-
-        $user = User::find(1);
-        dd($user->profile->country->name);
-    }
+   
     /**
      * Display a listing of the resource.
      *

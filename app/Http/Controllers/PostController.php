@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function test()
+    {
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+       $posts = Post::with('categories')->get();
+        return view('dashboard.posts.index',compact('posts'));
     }
 
     /**
@@ -24,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('dashboard.posts.create', compact('categories'));
     }
 
     /**
@@ -35,7 +41,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->slug = $request->title;
+
+        $post->user_id = 1;
+        $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
+        if ($request->hasFile('thumbnail'))
+            $filename = $request->file('thumbnail')->storeAs('posts', $filename, 'public');
+        else
+            $filename = Null;
+        $post->thumbnail = $filename;
+
+        $post->save();
+
+        $post->categories()->attach($request->categories);
+        if($post)
+        {
+            return redirect()->route('posts.index');
+        }
     }
 
     /**
@@ -46,7 +71,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('dashboard.posts.show',compact('post'));
     }
 
     /**
@@ -57,7 +82,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+    
+        $categories = Category::all();
+        return view('dashboard.posts.edit',compact('post','categories'));
     }
 
     /**
@@ -69,7 +96,21 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->user_id = 1;
+        $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
+        if ($request->hasFile('thumbnail'))
+            $filename = $request->file('thumbnail')->storeAs('posts', $filename, 'public');
+        else
+            $filename = $post->thumnail;
+        $post->thumbnail = $filename;
+        $post->update();
+        $post->categories()->sync($request->categories);
+        if ($post) {
+            return redirect()->route('posts.index');
+        }
+
     }
 
     /**
@@ -80,6 +121,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->categories()->detach();
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }
