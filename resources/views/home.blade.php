@@ -9,12 +9,17 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
+                    
+                    <p> Token : {{ request()->user()->api_token ?? 'N/A'}}</p>
+                    <form action="{{route('home')}}" method="post" class="form">
+                        @csrf
+                        <input type="submit" value="Generate Token" class="btn btn-primary" />
+                    </form>
 
-                    You are logged in!
                 </div>
             </div>
         </div>

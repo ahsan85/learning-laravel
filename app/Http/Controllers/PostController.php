@@ -1,15 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Category;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\New_;
 
 class PostController extends Controller
 {
     public function test()
     {
+        $post= new Post();
+        dd($post->user());
     }
     /**
      * Display a listing of the resource.
@@ -18,8 +23,11 @@ class PostController extends Controller
      */
     public function index()
     {
-       $posts = Post::with('categories')->get();
-        return view('dashboard.posts.index',compact('posts'));
+       $posts = Post::with('categories','user')->get();
+
+ 
+     
+         return view('dashboard.posts.index',compact('posts'));
     }
 
     /**
@@ -41,12 +49,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
         $post->slug = $request->title;
 
-        $post->user_id = 1;
+        $post->user_id = Auth::id();
         $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
         if ($request->hasFile('thumbnail'))
             $filename = $request->file('thumbnail')->storeAs('posts', $filename, 'public');

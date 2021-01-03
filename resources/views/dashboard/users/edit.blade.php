@@ -40,7 +40,7 @@
             <select id="country" class="form-control" name="country">
                 @if(!$countries->isEmpty())
                     @foreach($countries as $country)
-                        <option @if($user->profile->country->name==$country->name) {{'selected'}} @endif value="{{$country->id}}">{{$country->name}}</option>
+                        <option @if(optional($user->profile->country)->name==$country->name) {{'selected'}} @endif value="{{$country->id}}">{{$country->name}}</option>
                     @endforeach
                 @endif
             </select>
@@ -48,7 +48,7 @@
 
     </div>
     <div class="form-group ">
-        <select class="select-multiple-subject " name="roles[]" multiple="multiple" style="width: 100%" id="role">
+        <select class="select-multiple-role " name="roles[]" multiple="multiple" style="width: 100%" id="role">
             <!-- Computer science -->
 
 

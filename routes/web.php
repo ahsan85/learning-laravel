@@ -14,7 +14,9 @@
 use App\Http\Controllers\UserController;
 use Facade\FlareClient\View;
 // use Illuminate\Routing\Route;
+
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Location;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -25,7 +27,7 @@ Route::get('/welcome', function () {
 
 
 // Route::get('welcome','WelcomeController@welcome');
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth','verified'])->group(function () {
    Route::view('/', 'dashboard.admin');
    Route::resource('posts', 'PostController');
    Route::resource('profile', 'UserProfileController');
@@ -51,6 +53,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
    });
 });
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::match(['get','post'],'/home', 'HomeController@index')->name('home');

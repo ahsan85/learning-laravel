@@ -4,7 +4,7 @@
     <h1 class="h2">User Section</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
-            <a href="{{route('roles.create')}}" type="button" class="btn btn-sm btn-outline-secondary">Add New Role</a>
+            <a href="{{route('users.create')}}" type="button" class="btn btn-sm btn-outline-secondary">Add New User</a>
 
         </div>
 
@@ -17,11 +17,19 @@
         <div class="col-sm-3 col-md-4">
             <img src="{{asset('storage/'.$user->profile->photo)}}" width="300px" height="400px" style=" border-radius: 10%;" alt="" class="img-rounded img-responsive" />
         </div>
+    
+    
+
         <div class="mt-5">
             <span style="font-size: 20px;"><b>Name : </b>{{$user->name}} </span><br>
             <span style="font-size: 20px;"><b>Email : </b>{{$user->email}} </span><br>
             <span style="font-size: 20px;"><b>Phone : </b>+{{$user->profile->phone}} </span><br>
-            <span style="font-size: 20px;"><b>Address : </b>{{$user->profile->city}},{{$user->profile->country->name}} </span><br>
+            <span style="font-size: 20px;">
+            <b>Address : </b>{{$user->profile->city}}
+                @if($user->profile->country)
+                    , {{ optional($user->profile->country)->name }}
+                @endif
+            </span><br>
             <span style="font-size: 20px;"><b>Role Assigned To This User : </b>{{  $user->roles->implode('name', ', ') }}</span><br>
 
         </div>

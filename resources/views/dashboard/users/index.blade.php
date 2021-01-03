@@ -34,11 +34,11 @@
             <td class="pt-3"> {{$user->name}}</td>
             <td class="pt-3"> {{$user->email}}</td>
             <td class="pt-2"> <img src="{{asset('storage/'.$user->profile->photo)}}" width="50px" height="50px" style=" border-radius: 10%;"></td>
-            <td class="pt-3"> {{$user->profile->phone}}</td>
+            <td class="pt-3"> {{$user->profile->phone ?? 'N/A'}}</td>
             <td class="pt-3"> {{$user->profile->city}}</td>
-            <td class="pt-3"> {{$user->profile->country->name}}</td>
+            <td class="pt-3"> {{$user->profile->country->name??'N/A'}}</td>
             @if(!$user->roles->isEmpty()) 
-            <td class="pt-3"> {{  $user->roles->implode('name', ', ') }}</td>
+            <td class="pt-3"> {{$user->roles->implode('name', ', ') }}</td>
             @endif
             <td class="pt-2">
                 <div class=" btn-group" role="group">

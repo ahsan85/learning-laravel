@@ -42,15 +42,19 @@
 
             @if(!$post->categories->isEmpty())
             <td class="pt-3"> {{ $post->categories->implode('title', ', ') }}</td>
-            @endif
+            @else
+             <td class="pt-3">N/A</td>
+             @endif
             <td class="pt-3">
                 <div class="  col-xm btn-group " role="group">
-                    <a    href="{{route('posts.show',$post->id)}}" role="button" class="btn btn-secondary   btn-sm">View</a>
+                    <a href="{{route('posts.show',$post->id)}}" role="button" class="btn btn-secondary   btn-sm">View</a>
+                    @can("isAllowed",$post->user->id)
                     <a role="button" href="{{route('posts.edit',$post->id)}}" class="btn btn-secondary  btn-sm">Edit</a>
                     <form action="{{route('posts.destroy',$post->id)}}" method="post" class="btn-group">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-secondary  btn-sm " >Delete</button></form>
+                        <button type="submit" class="btn btn-secondary  btn-sm ">Delete</button></form>
+                    @endcan
 
                 </div>
             </td>

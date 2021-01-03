@@ -24,7 +24,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        //  Gate::define('isAllowed',function($user,$post)
+        //  {
+        //     // $allowed=explode(":",$allowed);
+        
+        //     // $roles=$user->roles->pluck('name')->toArray();
+        //     // return  array_intersect($post->all(),$roles);
+        //     return $user->id===$post;
+        //  });
 
-        //
+         
+        Gate::define('isAllowed','App\Gates\PostGate@allowed');
     }
 }

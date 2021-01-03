@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use App\UserProfile;
 use App\Role;
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     
     use Notifiable;
@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','username'
+        'name', 'email', 'password','username','api_token'
     ];
 
     /**
@@ -60,6 +60,11 @@ class User extends Authenticatable
         $username=$username.($count+1);
         $this->attributes['username']=strtolower($username);
     }
+    public function posts()
+    {
+      return $this->hasMany(Post::class);
+    }
+   
     
 }
 

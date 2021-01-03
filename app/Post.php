@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Category;
+use App\User;
 class Post extends Model
 {
     protected $appends = ['slug'];
@@ -29,5 +30,11 @@ class Post extends Model
            return $this->id;
        }
     }
+    public function user()
+    {
+      
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
 }
 

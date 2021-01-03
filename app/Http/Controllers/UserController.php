@@ -18,6 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        
         $users = User::with('profile', 'roles')->get();
 
         return view('dashboard.users.index', compact('users'));
@@ -53,7 +54,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->fullname;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->save();
         if ($user) {
             $filename = sprintf('profile_%s.jpg', random_int(1, 1000));
@@ -83,7 +84,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-
+        
         return view('dashboard.users.show', compact('user'));
     }
 
