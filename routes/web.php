@@ -20,14 +20,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Location;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-Route::view('/','welcome');
+
+Route::view('/', 'welcome');
 Route::get('/welcome', function () {
-    return view('welcome');
+   return view('welcome');
 });
 
 
 // Route::get('welcome','WelcomeController@welcome');
-Route::prefix('admin')->middleware(['auth','verified'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
    Route::view('/', 'dashboard.admin');
    Route::resource('posts', 'PostController');
    Route::resource('profile', 'UserProfileController');
@@ -37,22 +38,20 @@ Route::prefix('admin')->middleware(['auth','verified'])->group(function () {
    Route::resource('pages', 'PageController');
    Route::resource('categories', 'CategoryController');
    Route::resource('roles', 'RoleController');
-   Route::post('upload',function(){
+   Route::post('upload', function () {
       $filename = sprintf('tiny_%s.jpg', random_int(1, 1000));
       if (request()->hasFile('file'))
-          $filename = request()->file('file')->storeAs('tiny', $filename, 'public');
+         $filename = request()->file('file')->storeAs('tiny', $filename, 'public');
       else
-          $filename = null;
-          if($filename !==null)
-          {
-             return response()->json(['location'=>asset('storage/'.$filename)],200);
-          }
-          else{
-             return response()->json(['location'=>'Failed to upload'],200);
-          }
+         $filename = null;
+      if ($filename !== null) {
+         return response()->json(['location' => asset('storage/' . $filename)], 200);
+      } else {
+         return response()->json(['location' => 'Failed to upload'], 200);
+      }
    });
 });
 
-Auth::routes(['verify'=>true]);
+Auth::routes(['verify' => true]);
 
-Route::match(['get','post'],'/home', 'HomeController@index')->name('home');
+Route::match(['get', 'post'], '/home', 'HomeController@index')->name('home');

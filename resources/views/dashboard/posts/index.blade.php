@@ -10,6 +10,7 @@
 
     </div>
 </div>
+
 @if(!$posts->isEmpty())
 <div class="table-responsive">
     <table class="table table-striped" style="table-layout: auto; width: 100%;">
@@ -31,9 +32,11 @@
             <td class="pt-3">{{$post->id}}</td>
             <td class="pt-3"> {{$post->title}}</td>
             @if($post->thumbnail!==null)
-            <td class="pt-2"> <img src="{{asset('storage/'.$post->thumbnail)}}" width="50px" height="50px" style=" border-radius: 10%;"></td>
+            <td class="pt-2"> <img src="{{asset('storage/'.$post->thumbnail)}}" width="50px" height="50px"
+                    style=" border-radius: 10%;"></td>
             @else
-            <td class="pt-1"> <img src="{{asset('storage/posts/no_image.jpg')}}" width="50px" height="50px" style=" border-radius: 10%;"></td>
+            <td class="pt-1"> <img src="{{asset('storage/posts/no_image.jpg')}}" width="50px" height="50px"
+                    style=" border-radius: 10%;"></td>
 
             @endif
 
@@ -43,12 +46,13 @@
             @if(!$post->categories->isEmpty())
             <td class="pt-3"> {{ $post->categories->implode('title', ', ') }}</td>
             @else
-             <td class="pt-3">N/A</td>
-             @endif
+            <td class="pt-3">N/A</td>
+            @endif
             <td class="pt-3">
                 <div class="  col-xm btn-group " role="group">
-                    <a href="{{route('posts.show',$post->id)}}" role="button" class="btn btn-secondary   btn-sm">View</a>
-                    @can("isAllowed",$post->user->id)
+                    <a href="{{route('posts.show',$post->id)}}" role="button"
+                        class="btn btn-secondary   btn-sm">View</a>
+                    @can("viewAny",$post)
                     <a role="button" href="{{route('posts.edit',$post->id)}}" class="btn btn-secondary  btn-sm">Edit</a>
                     <form action="{{route('posts.destroy',$post->id)}}" method="post" class="btn-group">
                         @csrf

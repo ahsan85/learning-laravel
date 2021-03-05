@@ -108,7 +108,11 @@
                         </button>
                     </div>
                 </div>
-
+                @if (session('status'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('status') }}
+                </div>
+                @endif
                 @yield('content')
 
 

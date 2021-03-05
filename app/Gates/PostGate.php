@@ -1,7 +1,8 @@
 <?php
 namespace App\Gates;
+
+use Illuminate\Auth\Access\Response;
+
 class PostGate {
-    public function allowed ($user,$id){
-        return $user->id===$id;
-    }
+   
 }

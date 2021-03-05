@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Category;
 use App\Post;
 use App\User;
@@ -13,7 +14,7 @@ class PostController extends Controller
 {
     public function test()
     {
-        $post= new Post();
+        $post = new Post();
         dd($post->user());
     }
     /**
@@ -23,11 +24,11 @@ class PostController extends Controller
      */
     public function index()
     {
-       $posts = Post::with('categories','user')->get();
+        $posts = Post::with('categories', 'user')->get();
 
- 
-     
-         return view('dashboard.posts.index',compact('posts'));
+
+
+        return view('dashboard.posts.index', compact('posts'));
     }
 
     /**
@@ -49,7 +50,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        $response = Gate::inspect('create');
+
+        if ($response->denied()) {
+            return redirect()->back()->with('status', $response->message());
+        }
+
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
@@ -66,8 +73,7 @@ class PostController extends Controller
         $post->save();
 
         $post->categories()->attach($request->categories);
-        if($post)
-        {
+        if ($post) {
             return redirect()->route('posts.index');
         }
     }
@@ -80,7 +86,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('dashboard.posts.show',compact('post'));
+        return view('dashboard.posts.show', compact('post'));
     }
 
     /**
@@ -91,9 +97,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-    
+        //  Gate::authorize('edit-post',$post->user->id);
+        $response = Gate::inspect('view', $post);
+
+        if ($response->denied()) {
+            return redirect()->back()->with('status', $response->message());
+        }
         $categories = Category::all();
-        return view('dashboard.posts.edit',compact('post','categories'));
+        return view('dashboard.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -107,7 +118,12 @@ class PostController extends Controller
     {
         $post->title = $request->title;
         $post->content = $request->content;
-        $post->user_id = 1;
+        $post->user_id = $post->user_id;
+        $response = Gate::inspect('update', $post);
+
+        if ($response->denied()) {
+            return redirect()->back()->with('status', $response->message());
+        }
         $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
         if ($request->hasFile('thumbnail'))
             $filename = $request->file('thumbnail')->storeAs('posts', $filename, 'public');
@@ -119,7 +135,6 @@ class PostController extends Controller
         if ($post) {
             return redirect()->route('posts.index');
         }
-
     }
 
     /**
@@ -130,6 +145,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $response = Gate::inspect('delete', $post);
+
+        if ($response->denied()) {
+            return redirect()->back()->with('status', $response->message());
+        }
         $post->categories()->detach();
         $post->delete();
         return redirect()->route('posts.index');

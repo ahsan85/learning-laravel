@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use App\Post;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Post'=>'App\Policies\PostPolicy',
     ];
 
     /**
@@ -34,6 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         //  });
 
          
-        Gate::define('isAllowed','App\Gates\PostGate@allowed');
+        // Gate::define('isAllowed','App\Gates\PostGate@allowed');
+        // Gate::define('edit-post','App\Gates\PostGate@editAction');
+        // Gate::define('delete-post','App\Gates\PostGate@deleteAction');
     }
 }
